@@ -38,10 +38,9 @@ def main():
             metaFile = metaFileHandler(config)
             metaFile.parse_directory(args.input_dir)
 
-    elif args.job[0] == "exif":
-        file_path = ".\\data\\album_data.csv"
-        exif = exifHandler()
-        exif.updateExif(file_path)
+    elif args.job[0] == "exif":        
+        exif = exifHandler(config)
+        exif.updateExifs(config.getConfig("meta_album_dir"))
 
     elif args.job[0] == "show":
         print("Not implemented")

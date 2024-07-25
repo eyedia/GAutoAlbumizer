@@ -9,18 +9,20 @@ class FileHandler:
         self.config = config
         self.meta_file_temp_suffix = config.getConfig("meta_file_temp_suffix")
 
+
     def split_csv(self, csvFilePath, newDirPath):
         df = pd.read_csv(csvFilePath)
         for (n), group in df.groupby(df.columns[0]):
             group.to_csv(f'{newDirPath}{n}{self.meta_file_temp_suffix}.csv')
-
         self.remove_first_column(newDirPath)
+
 
     def sort_csv(self, fromFileName, toFileName, deleteFromFile=True):
         pd.read_csv(fromFileName, header=None).sort_values([0,1], ascending=[True, False]).to_csv(toFileName, index=False, header=None)
 
         if deleteFromFile:
             os.remove(fromFileName)
+
 
     def remove_first_column(self, dir_path):
 
