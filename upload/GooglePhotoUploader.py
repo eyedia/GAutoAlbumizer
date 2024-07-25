@@ -205,6 +205,10 @@ class GooglePhotoUploader:
 
 
     def uploadAll(self):
+        if not os.path.exists("client_secrets.json"):
+            print("client_secrets.json is missing! Please contact developer.")
+            return
+        
         input_dir = self.config.getConfig("meta_album_dir")
         for p in Path(input_dir).glob('*.csv'):
             meta_file_name = "{0}\\{1}".format(input_dir, p.name)  

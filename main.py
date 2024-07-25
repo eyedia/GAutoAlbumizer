@@ -19,11 +19,19 @@ def getConfig(env="dev_local"):
     else:
         raise ValueError(f'config {env} not found! Please update config.ini file and try again.')
 
+def ensureEnvironment(config):
+    if not os.path.exists(config.getConfig("meta_album_dir")):
+        os.makedirs(config.getConfig("meta_album_dir"))
+
+    if not os.path.exists(config.getConfig("log_dir")):
+        os.makedirs(config.getConfig("log_dir"))
+
 def main():
     config = getConfig()
     if config is None:
         sys.exit(100)
     
+    ensureEnvironment(config)
     parser = argparse.ArgumentParser()
     parser.add_argument('--job', nargs='*', required=True)
     parser.add_argument('--input-dir', metavar='input_dir',dest='input_dir')

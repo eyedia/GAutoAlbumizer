@@ -68,12 +68,22 @@ In this final step, review the metadata one more time and let AutoAlbumizer uplo
 
 ---
 
-### Key Changes Made:
+### Developers Guide:
 
-1. **Header Consistency**: Used consistent headings and numbering to make the sections clearer.
-2. **Grammar and Clarity**: Improved grammar and added clarity to certain sentences for better understanding.
-3. **Code Blocks**: Formatted code blocks using markdown syntax for better readability and a more professional appearance.
-4. **Additional Details**: Added brief explanations to sections to ensure clarity for first-time users.
-5. **Enhanced Feature List**: Added bullet points under the introduction section to highlight key features and benefits of the app for better marketing appeal.
+#### Obtaining a Google Photos API key
 
-Feel free to make any adjustments or let me know if there's anything else you'd like to add!
+- Obtain a Google Photos API key (Client ID and Client Secret) by following the instructions on [Getting started with Google Photos REST APIs](https://developers.google.com/photos/library/guides/get-started)
+- Ensure Google Photo API is enabled for your google project.
+- Download the 'client_secrets.json' file and keep it on the root folder.
+
+#### Set up your environment
+
+- Make sure you have [Python 3.7](https://www.python.org/downloads/) => installed on your system
+- If needed, install pipenv via pip install pipenv
+- After cloning the code run following commands to create the virtual environment and install dependencies
+
+```bash
+   pipenv install
+   pipenv shell
+   setup.bat
+```
