@@ -47,11 +47,9 @@ def main():
         metaFile = metaFileHandler()
         metaFile.split_csv(".\\data\\album_data.csv", ".\\data\\albums\\")
     
-    elif args.job[0] == "upload":
-        albumName = args.job_args[0]
-        photos = args.job_args[1]
-        uploader = GooglePhotoUploader()
-        uploader.upload(albumName, photos)
+    elif args.job[0] == "upload":        
+        uploader = GooglePhotoUploader(config)
+        uploader.uploadAll()
 
     else:
         print("usage:")

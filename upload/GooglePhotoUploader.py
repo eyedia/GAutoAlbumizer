@@ -6,27 +6,15 @@ import os.path
 import argparse
 import logging
 import datetime
+from pathlib import Path
+import pandas as pd 
 
 class GooglePhotoUploader:
 
-    def __init__(self):
+    def __init__(self, config):
         self.name = 'self'
-        self.log_file = ".\\data\\{0}".format(datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))
-        self.auth_token_file = ".\\data\\auth_token.txt"  
-        self.output_file = ".\\data\\album_data.csv"     
-
-    # def parse_args(arg_input=None):
-    #     parser = argparse.ArgumentParser(description='Upload photos to Google Photos.')
-    #     parser.add_argument('--auth ', metavar='auth_file', dest='auth_file',
-    #                     help='file for reading/storing user authentication tokens')
-    #     parser.add_argument('--album', metavar='album_name', dest='album_name',
-    #                     help='name of photo album to create (if it doesn\'t exist). Any uploaded photos will be added to this album.')
-    #     parser.add_argument('--log', metavar='log_file', dest='log_file',
-    #                     help='name of output file for log messages')
-    #     parser.add_argument('photos', metavar='photo',type=str, nargs='*',
-    #                     help='filename of a photo to upload')
-    #     return parser.parse_args(arg_input)
-
+        self.config = config
+        self.log_file = "{0}\{1}".format(config.getConfig("log_dir"), datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))          
 
     def auth(self, scopes):
         flow = InstalledAppFlow.from_client_secrets_file(
@@ -188,21 +176,35 @@ class GooglePhotoUploader:
         except KeyError:
             pass
 
-    def testUpload(self, a, photos):
-        for photo_file_name in photos:
-            print(photo_file_name)
+    def uploadAll(self):
+        input_dir = self.config.getConfig("meta_album_dir")
+        for p in Path(input_dir).glob('*.csv'):
+            meta_file_name = "{0}\\{1}".format(input_dir, p.name)  
+            self.uploadOneMetaData(meta_file_name)
 
-    def upload(self, albumName, photos):
+
+    def uploadOneMetaData(self, meta_file_name):     
+        print(meta_file_name)  
+        df = pd.read_csv(meta_file_name, header=None)        
+        df = df.reset_index()
+
+        if not df.empty:
+            self.upload(df[0].iloc[0], df[1].to_numpy())
+        else:
+            print(f"{meta_file_name} is empty, skipping it.")       
+
+
+    def upload(self, album, photo_file_names):
 
         logging.basicConfig(format='%(asctime)s %(module)s.%(funcName)s:%(levelname)s:%(message)s',
                         datefmt='%m/%d/%Y %I_%M_%S %p',
                         filename=self.log_file,
                         level=logging.INFO)
 
-        #session = self.get_authorized_session(self.auth_token_file)
+        #session = self.get_authorized_session(self.config.getConfif("auth_token_file"))
         #self.upload_photos(session, albumName, photos)
 
-        self.testUpload(albumName, photos)
+        print(album, photo_file_names)
 
         #As a quick status check, dump the albums and their key attributes
         #print("{:<50} | {:>8} | {} ".format("PHOTO ALBUM","# PHOTOS", "IS WRITEABLE?"))

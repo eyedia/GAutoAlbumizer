@@ -11,9 +11,11 @@ class FileHandler:
 
 
     def split_csv(self, csvFilePath, newDirPath):
-        df = pd.read_csv(csvFilePath)
+        df = pd.read_csv(csvFilePath, header=None)
+        
         for (n), group in df.groupby(df.columns[0]):
-            group.to_csv(f'{newDirPath}{n}{self.meta_file_temp_suffix}.csv')
+            group.to_csv(f'{newDirPath}\\{n}{self.meta_file_temp_suffix}.csv')
+
         self.remove_first_column(newDirPath)
 
 
@@ -30,8 +32,8 @@ class FileHandler:
         for p in Path(dir_path).glob(f'*{self.meta_file_temp_suffix}.csv'):
             file_name = "{0}\\{1}".format(dir_path, p.name)            
             temp_files.append(file_name)
-            df = pd.read_csv(file_name, header=None)
-            df = df.drop(df.columns[0], axis=1)
+            df = pd.read_csv(file_name, header=0)            
+            df = df.drop(df.columns[0], axis=1) #first column, coming extra after grouping           
             df.to_csv(file_name.replace(self.meta_file_temp_suffix, ""), index=False, header=None)
 
         
