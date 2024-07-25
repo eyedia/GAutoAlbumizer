@@ -1,10 +1,79 @@
+Here's a refined version of your markdown page for **Google Auto Albumizer** with corrections and enhancements for clarity and readability:
+
+---
+
 # Google Auto Albumizer
-AutoAlbumizer is your ultimate google photo management tool, offering bulk uploads and intelligent album creation to keep your memories organized effortlessly.
+
+**AutoAlbumizer** is your ultimate Google Photos management tool, offering bulk uploads and intelligent album creation to keep your memories organized effortlessly.
 
 ![Google Auto Albumizer](graphics/GAutoAlbumizer_logo_v2_m.png)
 
+### Why Use AutoAlbumizer?
+- **Efficient Bulk Uploads**: Upload your photos to Google Photos in bulk and let AutoAlbumizer automatically create smart albums, saving you time and effort.
+- **Automatic Album Creation**: Enjoy an organized photo library with ease as AutoAlbumizer combines bulk uploads with intelligent album creation.
+- **Hassle-Free Organization**: Say goodbye to manual sorting! AutoAlbumizer's intelligent algorithms automatically organize your photos into albums as you upload them.
+- **Intuitive User Experience**: Experience seamless album creation with AutoAlbumizer's intuitive interface, designed for ease of use and efficiency.
 
-* Bulk upload your photos to Google Photos and let AutoAlbumizer automatically create smart albums, saving you time and effort.
-* AutoAlbumizer: where bulk uploads meet automatic album creation. Enjoy an organized photo library with ease.
-* Say goodbye to manual sorting! AutoAlbumizer's intelligent algorithms organize your photos into albums automatically as you bulk upload them.
-* With AutoAlbumizer, upload your photos in bulk to Google Photos and experience seamless album creation with our intuitive app.
+## Features
+
+The tool operates through the following steps or stages:
+
+### 1. Scan a Folder and Its Subdirectories
+
+The **Scan** command scans a given directory and its subdirectories to create metadata. You can see how many folders and photos you have. The tool intelligently identifies the first subdirectory as the album name.
+
+**Usage**:
+1. Run the following command:
+   ```bash
+   python main.py --job scan --input-dir D:\GD\temp\01Old
+   ```
+
+### 2. Update EXIF Creation Date (Optional)
+
+Have you noticed the timeline-scroll on the right? Almost all photo management tools have this feature to help you scroll across your timeline.
+
+![Google Photo Timeline Scroll](graphics/google-photos-timeline-scroll.png)
+
+If you have digitized your old photos or somehow your original photo creation dates are incorrect, this step will help you update the photo creation date.
+
+**Usage**:
+1. Update creation dates for the required photos in the metadata.
+2. Run the following command to update the EXIF creation date:
+   ```bash
+   python main.py --job exif
+   ```
+
+> **Note:** This step is optional.
+
+### 3. Upload Photos to Google Albums
+
+In this final step, review the metadata one more time and let AutoAlbumizer upload the photos for you, either by creating new albums or uploading them to existing ones.
+
+**Usage**:
+1. Review the metadata files.
+2. Run the following command to upload photos:
+   ```bash
+   python main.py --job upload
+   ```
+
+## TODO
+
+### Basic Functionalities
+
+- Ensure that the basic workflow functions smoothly.
+
+### Cross-Platform GUI
+
+- We are working on a simple cross-platform GUI. If you have any suggestions, please feel free to reach out.
+
+---
+
+### Key Changes Made:
+
+1. **Header Consistency**: Used consistent headings and numbering to make the sections clearer.
+2. **Grammar and Clarity**: Improved grammar and added clarity to certain sentences for better understanding.
+3. **Code Blocks**: Formatted code blocks using markdown syntax for better readability and a more professional appearance.
+4. **Additional Details**: Added brief explanations to sections to ensure clarity for first-time users.
+5. **Enhanced Feature List**: Added bullet points under the introduction section to highlight key features and benefits of the app for better marketing appeal.
+
+Feel free to make any adjustments or let me know if there's anything else you'd like to add!
