@@ -1,18 +1,18 @@
 import os
 import datetime
 import sys
+import pandas as pd 
 
 sys.path.append("..")
 from common.fileHandler import FileHandler
 
 class metaFileHandler:
-    def __init__(self):
+    def __init__(self, config):
         self.name = 'self'
+        self.config = config
         self.dir =  ""
-        self.file_content = ""
-        self.output_file_temp = ".\\data\\album_data_temp.csv"
-        self.output_file = ".\\data\\album_data.csv"
-        self.fileHandler = FileHandler()
+        self.file_content = ""        
+        self.fileHandler = FileHandler(config)
 
     def list_files_recursive(self, path='.'):
         image_extensions = (".jpg", ".jpeg")   
@@ -33,15 +33,9 @@ class metaFileHandler:
     def parse_directory(self, dir):
         self.dir = dir
         self.list_files_recursive(dir)
-        print(self.file_content)
-        f = open(self.output_file_temp, "w")
+        f = open(self.config.getConfig("meta_file_temp"), "w")
         f.write(self.file_content)
         f.close()
 
-        self.fileHandler.sort_csv(self.output_file_temp, self.output_file)
-        #pd.read_csv(self.output_file_temp, header=None).sort_values([0,1], ascending=[True, False]).to_csv(self.output_file, index=False, header=None)
-        #os.remove(self.output_file_temp)
-
-
-    def split_csv(self, csvFilePath, newDirPath):       
-       self.fileHandler.split_csv(csvFilePath, newDirPath)
+        self.fileHandler.sort_csv(self.config.getConfig("meta_file_temp"), self.config.getConfig("meta_file"))        
+        self.fileHandler.split_csv(self.config.getConfig("meta_file"), self.config.getConfig("meta_album_dir"))

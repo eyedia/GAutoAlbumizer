@@ -4,13 +4,15 @@ from pathlib import Path
 
 class FileHandler:
 
-    def __init__(self):
+    def __init__(self, config):
         self.name = 'self'
+        self.config = config
+        self.meta_file_temp_suffix = config.getConfig("meta_file_temp_suffix")
 
     def split_csv(self, csvFilePath, newDirPath):
         df = pd.read_csv(csvFilePath)
         for (n), group in df.groupby(df.columns[0]):
-            group.to_csv(f'{newDirPath}{n}_xxtempxx.csv')
+            group.to_csv(f'{newDirPath}{n}{self.meta_file_temp_suffix}.csv')
 
         self.remove_first_column(newDirPath)
 
@@ -18,17 +20,17 @@ class FileHandler:
         pd.read_csv(fromFileName, header=None).sort_values([0,1], ascending=[True, False]).to_csv(toFileName, index=False, header=None)
 
         if deleteFromFile:
-            os.remove(toFileName)
+            os.remove(fromFileName)
 
     def remove_first_column(self, dir_path):
 
         temp_files = []
-        for p in Path(dir_path).glob('*_xxtempxx.csv'):
+        for p in Path(dir_path).glob(f'*{self.meta_file_temp_suffix}.csv'):
             file_name = "{0}\\{1}".format(dir_path, p.name)            
             temp_files.append(file_name)
             df = pd.read_csv(file_name, header=None)
             df = df.drop(df.columns[0], axis=1)
-            df.to_csv(file_name.replace("_xxtempxx", ""), index=False, header=None)
+            df.to_csv(file_name.replace(self.meta_file_temp_suffix, ""), index=False, header=None)
 
         
         for temp_file in temp_files:
