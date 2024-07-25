@@ -35,6 +35,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--job', nargs='*', required=True)
     parser.add_argument('--input-dir', metavar='input_dir',dest='input_dir')
+    parser.add_argument('--root-dir', metavar='root_dir',dest='root_dir')
     args = parser.parse_args()
     
     if len(args.job) == 0:
@@ -44,7 +45,7 @@ def main():
     if args.job[0] == "scan":        
         if args.input_dir is not None:           
             metaFile = metaFileHandler(config)
-            metaFile.parse_directory(args.input_dir)
+            metaFile.parse_directory(args.input_dir, args.root_dir)
 
     elif args.job[0] == "exif":        
         exif = exifHandler(config)
