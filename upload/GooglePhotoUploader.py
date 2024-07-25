@@ -176,11 +176,21 @@ class GooglePhotoUploader:
         except KeyError:
             pass
 
-    def uploadAll(self):
-        input_dir = self.config.getConfig("meta_album_dir")
-        for p in Path(input_dir).glob('*.csv'):
-            meta_file_name = "{0}\\{1}".format(input_dir, p.name)  
-            self.uploadOneMetaData(meta_file_name)
+
+    def upload(self, album, photos):
+
+        logging.basicConfig(format='%(asctime)s %(module)s.%(funcName)s:%(levelname)s:%(message)s',
+                        datefmt='%m/%d/%Y %I_%M_%S %p',
+                        filename=self.log_file,
+                        level=logging.INFO)
+
+        session = self.get_authorized_session(self.config.getConfig("auth_token_file"))
+        self.upload_photos(session, album, photos)        
+        #As a quick status check, dump the albums and their key attributes
+        #print("{:<50} | {:>8} | {} ".format("PHOTO ALBUM","# PHOTOS", "IS WRITEABLE?"))
+        # for a in getAlbums(session):
+        #    print("{:<50} | {:>8} | {} ".format(a["title"],a.get("mediaItemsCount", "0"), str(a.get("isWriteable", False))))
+
 
 
     def uploadOneMetaData(self, meta_file_name):     
@@ -194,22 +204,8 @@ class GooglePhotoUploader:
             print(f"{meta_file_name} is empty, skipping it.")       
 
 
-    def upload(self, album, photo_file_names):
-
-        logging.basicConfig(format='%(asctime)s %(module)s.%(funcName)s:%(levelname)s:%(message)s',
-                        datefmt='%m/%d/%Y %I_%M_%S %p',
-                        filename=self.log_file,
-                        level=logging.INFO)
-
-        #session = self.get_authorized_session(self.config.getConfif("auth_token_file"))
-        #self.upload_photos(session, albumName, photos)
-
-        print(album, photo_file_names)
-
-        #As a quick status check, dump the albums and their key attributes
-        #print("{:<50} | {:>8} | {} ".format("PHOTO ALBUM","# PHOTOS", "IS WRITEABLE?"))
-        # for a in getAlbums(session):
-        #    print("{:<50} | {:>8} | {} ".format(a["title"],a.get("mediaItemsCount", "0"), str(a.get("isWriteable", False))))
-
-
-    #def uploadFromMeta(self):
+    def uploadAll(self):
+        input_dir = self.config.getConfig("meta_album_dir")
+        for p in Path(input_dir).glob('*.csv'):
+            meta_file_name = "{0}\\{1}".format(input_dir, p.name)  
+            self.uploadOneMetaData(meta_file_name)
