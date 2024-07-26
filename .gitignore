@@ -4,3 +4,5 @@ __pycache__/
 data/
 Logs/
 sample/MyPhotoDump_bu/
+build/
+dist/
