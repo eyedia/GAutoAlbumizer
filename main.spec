@@ -27,7 +27,9 @@ a = Analysis(
         ('sample/MyPhotoDump/Skies/pexels-cliford-mervil-988071-2469122.jpg', 'sample/MyPhotoDump/Skies'),
 
 
+        ('client_secrets.json', '.'),
         ('config.ini', '.'),
+
         ('common/__init__.py', 'common'),
         ('common/config.py', 'common'),
         ('common/fileHandler.py', 'common'),

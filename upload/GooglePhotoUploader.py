@@ -11,16 +11,14 @@ import pandas as pd
 
 class GooglePhotoUploader:
 
-    def __init__(self, config):
+    def __init__(self, config, cwd):
         self.name = 'self'
         self.config = config
+        self.client_secrets_file = os.path.join(cwd, 'client_secrets.json')
         self.log_file = "{0}\{1}".format(config.getConfig("log_dir"), datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))          
 
     def auth(self, scopes):
-        flow = InstalledAppFlow.from_client_secrets_file(
-        'client_secrets.json',
-        scopes=scopes)
-
+        flow = InstalledAppFlow.from_client_secrets_file(self.client_secrets_file, scopes=scopes)
         flow.run_local_server()    
         credentials = flow.credentials
         
@@ -205,8 +203,8 @@ class GooglePhotoUploader:
 
 
     def uploadAll(self):
-        if not os.path.exists("client_secrets.json"):
-            print("client_secrets.json is missing! Please contact developer.")
+        if not os.path.exists(self.client_secrets_file):
+            print(f"{self.client_secrets_file} is missing! Please contact developer.")
             return
         
         input_dir = self.config.getConfig("meta_album_dir")

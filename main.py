@@ -10,7 +10,12 @@ from exif.updateExif import exifHandler
 from upload.GooglePhotoUploader import GooglePhotoUploader
 
 
-def getConfig(env="dev_local"):    
+def getConfig(env="prod"):
+    print(os.environ.get('EYEDIA_TECH_ENV'))
+    if os.environ.get('EYEDIA_TECH_ENV') == "dev_local":
+        print("Working in development environment.")
+        env = "dev_local"
+
     configParser = configparser.ConfigParser()
     full_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini')
     configParser.read(full_path)
@@ -20,6 +25,11 @@ def getConfig(env="dev_local"):
     else:
         raise ValueError(f'config {env} not found! Please update config.ini file and try again.')
 
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
 def ensureEnvironment(config):
     if not os.path.exists(config.getConfig("meta_album_dir")):
         os.makedirs(config.getConfig("meta_album_dir"))
@@ -27,11 +37,14 @@ def ensureEnvironment(config):
     if not os.path.exists(config.getConfig("log_dir")):
         os.makedirs(config.getConfig("log_dir"))
 
-    if not config.getConfig("local") == "false":
-        shutil.copytree(config.getConfig("sample_album_dir"), "./sample")
-
+    print(config.getConfig("local") == "false")
+    
+    if config.getConfig("local") == "false" and not os.path.exists("sample_albums") and os.path.exists(resource_path(config.getConfig("sample_album_dir"))):
+        print("extracing sample albums...")
+        shutil.copytree(resource_path(config.getConfig("sample_album_dir")), "./sample_albums")
 
 def main():
+
     config = getConfig()
     if config is None:
         sys.exit(100)
@@ -62,7 +75,7 @@ def main():
         metaFile.split_csv(".\\data\\album_data.csv", ".\\data\\albums\\")
     
     elif args.job[0] == "upload":        
-        uploader = GooglePhotoUploader(config)
+        uploader = GooglePhotoUploader(config, os.path.abspath(os.path.dirname(__file__)))
         uploader.uploadAll()
 
     else:
