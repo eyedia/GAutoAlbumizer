@@ -11,9 +11,8 @@ from upload.GooglePhotoUploader import GooglePhotoUploader
 
 
 def getConfig(env="prod"):
-    print(os.environ.get('EYEDIA_TECH_ENV'))
     if os.environ.get('EYEDIA_TECH_ENV') == "dev_local":
-        print("Working in development environment.")
+        #print("Working in development environment.")
         env = "dev_local"
 
     configParser = configparser.ConfigParser()
@@ -36,8 +35,6 @@ def ensureEnvironment(config):
 
     if not os.path.exists(config.getConfig("log_dir")):
         os.makedirs(config.getConfig("log_dir"))
-
-    print(config.getConfig("local") == "false")
     
     if config.getConfig("local") == "false" and not os.path.exists("sample_albums") and os.path.exists(resource_path(config.getConfig("sample_album_dir"))):
         print("extracing sample albums...")
@@ -63,7 +60,8 @@ def main():
     if args.job[0] == "scan":        
         if args.input_dir is not None:           
             metaFile = metaFileHandler(config)
-            metaFile.parse_directory(args.input_dir, args.root_dir)
+            result = metaFile.parse_directory(args.input_dir, args.root_dir)
+            print(f"Found {result[1]} files by scanning {result[0]} directories and {result[2]} albums identified.")
 
     elif args.job[0] == "exif":        
         exif = exifHandler(config)

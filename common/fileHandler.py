@@ -13,10 +13,13 @@ class FileHandler:
     def split_csv(self, csvFilePath, newDirPath):
         df = pd.read_csv(csvFilePath, header=None)
         
+        group_count = 0
         for (n), group in df.groupby(df.columns[0]):
+            group_count = group_count + 1
             group.to_csv(f'{newDirPath}\\{n}{self.meta_file_temp_suffix}.csv')
 
         self.remove_first_column(newDirPath)
+        return group_count
 
 
     def sort_csv(self, fromFileName, toFileName, deleteFromFile=True):

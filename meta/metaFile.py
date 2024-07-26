@@ -14,16 +14,20 @@ class metaFileHandler:
         self.file_content = ""
         self.image_extensions = (".jpg", ".jpeg") 
         self.fileHandler = FileHandler(config)
+        self.count_dirs = 0
+        self.count_files = 0
 
     def list_files_recursive(self, dir, root_dir):
           
         global file_content
         for entry in os.listdir(dir):        
             full_path = os.path.join(dir, entry)
-            if os.path.isdir(full_path):            	
+            if os.path.isdir(full_path):
+                self.count_dirs = self.count_dirs + 1
                 self.list_files_recursive(full_path, root_dir)
             else:
-                if full_path.endswith(self.image_extensions):                
+                if full_path.endswith(self.image_extensions):
+                    self.count_files = self.count_files + 1
                     album_name = self.getAlbumName(full_path, root_dir)
                     self.file_content += ("{0},{1},{2},False\n".format(album_name, full_path, datetime.datetime.fromtimestamp(os.path.getmtime(full_path))))
        
@@ -36,7 +40,8 @@ class metaFileHandler:
         f.close()
 
         self.fileHandler.sort_csv(self.config.getConfig("meta_file_temp"), self.config.getConfig("meta_file"))        
-        self.fileHandler.split_csv(self.config.getConfig("meta_file"), self.config.getConfig("meta_album_dir"))
+        split_count = self.fileHandler.split_csv(self.config.getConfig("meta_file"), self.config.getConfig("meta_album_dir"))
+        return (self.count_dirs, self.count_files, split_count)
 
     
     def getAlbumName(self, full_path, root_dir_name):        
