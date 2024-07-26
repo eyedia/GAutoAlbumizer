@@ -7,7 +7,7 @@ class FileHandler:
     def __init__(self, config):
         self.name = 'self'
         self.config = config
-        self.meta_file_temp_suffix = config.getConfig("meta_file_temp_suffix")
+        self.meta_file_temp_suffix = config.meta_file_temp_suffix
 
 
     def split_csv(self, csvFilePath, newDirPath):

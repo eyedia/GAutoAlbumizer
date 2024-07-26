@@ -35,12 +35,12 @@ class metaFileHandler:
     def parse_directory(self, dir, root_dir):
         self.dir = dir
         self.list_files_recursive(dir, root_dir)
-        f = open(self.config.getConfig("meta_file_temp"), "w")
+        f = open(self.config.meta_file_temp, "w")
         f.write(self.file_content)
         f.close()
 
-        self.fileHandler.sort_csv(self.config.getConfig("meta_file_temp"), self.config.getConfig("meta_file"))        
-        split_count = self.fileHandler.split_csv(self.config.getConfig("meta_file"), self.config.getConfig("meta_album_dir"))
+        self.fileHandler.sort_csv(self.config.meta_file_temp, self.config.meta_file)        
+        split_count = self.fileHandler.split_csv(self.config.meta_file, self.config.meta_album_dir)
         return (self.count_dirs, self.count_files, split_count)
 
     

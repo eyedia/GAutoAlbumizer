@@ -12,9 +12,9 @@ class exifHandler:
         warnings.filterwarnings("error")  
 
 
-    def updateExifs(self, input_dir):
-        for p in Path(input_dir).glob('*.csv'):
-            file_name = "{0}\\{1}".format(input_dir, p.name)
+    def updateExifs(self):
+        for p in Path(self.config.meta_album_dir).glob('*.csv'):
+            file_name = "{0}\\{1}".format(self.config.meta_album_dir, p.name)
             self.updateExif(file_name)
 
     def updateExif(self, file_name):

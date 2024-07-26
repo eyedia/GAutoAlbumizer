@@ -11,14 +11,13 @@ import pandas as pd
 
 class GooglePhotoUploader:
 
-    def __init__(self, config, cwd):
+    def __init__(self, config):
         self.name = 'self'
-        self.config = config
-        self.client_secrets_file = os.path.join(cwd, 'client_secrets.json')
-        self.log_file = "{0}\{1}".format(config.getConfig("log_dir"), datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))          
+        self.config = config        
+        self.log_file = "{0}\{1}".format(config.log_dir, datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))          
 
     def auth(self, scopes):
-        flow = InstalledAppFlow.from_client_secrets_file(self.client_secrets_file, scopes=scopes)
+        flow = InstalledAppFlow.from_client_secrets_file(self.config.client_secrets_file, scopes=scopes)
         flow.run_local_server()    
         credentials = flow.credentials
         
@@ -182,7 +181,7 @@ class GooglePhotoUploader:
                         filename=self.log_file,
                         level=logging.INFO)
 
-        session = self.get_authorized_session(self.config.getConfig("auth_token_file"))
+        session = self.get_authorized_session(self.config.auth_token_file)
         self.upload_photos(session, album, photos)        
         #As a quick status check, dump the albums and their key attributes
         #print("{:<50} | {:>8} | {} ".format("PHOTO ALBUM","# PHOTOS", "IS WRITEABLE?"))
@@ -203,11 +202,11 @@ class GooglePhotoUploader:
 
 
     def uploadAll(self):
-        if not os.path.exists(self.client_secrets_file):
-            print(f"{self.client_secrets_file} is missing! Please contact developer.")
+        if not os.path.exists(self.config.client_secrets_file):
+            print(f"{self.config.client_secrets_file} is missing! Please contact developer.")
             return
         
-        input_dir = self.config.getConfig("meta_album_dir")
+        input_dir = self.config.meta_album_dir
         for p in Path(input_dir).glob('*.csv'):
             meta_file_name = "{0}\\{1}".format(input_dir, p.name)  
             self.uploadOneMetaData(meta_file_name)
