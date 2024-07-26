@@ -2,6 +2,7 @@ import os, sys, inspect
 import argparse
 import importlib
 import configparser
+import shutil
 
 from common.config import galbumizer_config
 from meta.metaFile import metaFileHandler
@@ -25,6 +26,10 @@ def ensureEnvironment(config):
 
     if not os.path.exists(config.getConfig("log_dir")):
         os.makedirs(config.getConfig("log_dir"))
+
+    if not config.getConfig("local") == "false":
+        shutil.copytree(config.getConfig("sample_album_dir"), "./sample")
+
 
 def main():
     config = getConfig()
