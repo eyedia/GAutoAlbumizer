@@ -6,7 +6,7 @@ Here's a refined version of your markdown page for **Google Auto Albumizer** wit
 
 **AutoAlbumizer** is your ultimate Google Photos management tool, offering bulk uploads and intelligent album creation to keep your memories organized effortlessly.
 
-![Google Auto Albumizer](graphics/GAutoAlbumizer_logo_v2_m.png)
+![Google Auto Albumizer](graphics/GAutoAlbumizer_logo_m.png)
 
 ### Why Use AutoAlbumizer?
 - **Efficient Bulk Uploads**: Upload your photos to Google Photos in bulk and let AutoAlbumizer automatically create smart albums, saving you time and effort.
