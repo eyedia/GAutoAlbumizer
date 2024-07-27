@@ -8,6 +8,7 @@ import logging
 import datetime
 from pathlib import Path
 import pandas as pd 
+import subprocess
 
 class GooglePhotoUploader:
 
@@ -68,6 +69,7 @@ class GooglePhotoUploader:
         with open(auth_file, 'w') as f:
             print(json.dumps(cred_dict), file=f)
 
+        subprocess.check_call(["attrib","+H", auth_file])
     # Generator to loop through all albums
 
     def getAlbums(self, session, appCreatedOnly=False):

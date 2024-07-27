@@ -29,25 +29,32 @@ class gaa_config_parser:
         return os.path.join(os.path.abspath("."), relative_path)
 
     def ensureEnvironment(self):
-        self.root_dir = os.path.join(pathlib.Path(os.getenv('APPDATA')), "GAutoAlbumizer")
+        self.app_data_dir = os.path.join(pathlib.Path(os.getenv('APPDATA')), "GAutoAlbumizer")
+        self.app_data_local_dir = os.path.join(pathlib.Path(os.getenv('LOCALAPPDATA')), "GAutoAlbumizer")
 
-        self.meta_file = os.path.join(self.root_dir, self.config_section.getConfig("meta_file"))
-        self.meta_file_temp =  os.path.join(self.root_dir, self.config_section.getConfig("meta_file_temp"))
+        self.meta_file = os.path.join(self.app_data_dir, self.config_section.getConfig("meta_file"))
+        self.meta_file_temp =  os.path.join(self.app_data_dir, self.config_section.getConfig("meta_file_temp"))
         self.meta_file_temp_suffix = self.config_section.getConfig("meta_file_temp_suffix")
-        self.meta_album_dir = os.path.join(self.root_dir, self.config_section.getConfig("meta_album_dir"))
-        self.sample_album_dir = os.path.join(self.root_dir, self.config_section.getConfig("meta_file_temp"))
-        self.log_dir = os.path.join(self.root_dir, self.config_section.getConfig("log_dir"))
-        self.auth_token_file = os.path.join(self.cwd, self.config_section.getConfig("auth_token_file"))        
+        self.meta_album_dir = os.path.join(self.app_data_dir, self.config_section.getConfig("meta_album_dir"))
+        self.sample_album_dir = os.path.join(self.app_data_dir, self.config_section.getConfig("meta_file_temp"))
+        self.log_dir = os.path.join(self.app_data_dir, self.config_section.getConfig("log_dir"))
+        self.auth_token_file = os.path.join(self.app_data_local_dir, self.config_section.getConfig("auth_token_file"))        
         self.client_secrets_file = os.path.join(self.cwd, "client_secrets.json")
 
-        if not os.path.exists(self.root_dir):
-            os.makedirs(self.root_dir)
+        if not os.path.exists(self.app_data_dir):
+            os.makedirs(self.app_data_dir)
 
         if not os.path.exists(self.meta_album_dir):
             os.makedirs(self.meta_album_dir)
 
         if not os.path.exists(self.log_dir):
             os.makedirs(self.log_dir)
+
+        if not os.path.exists(self.app_data_local_dir):
+            os.makedirs(self.app_data_local_dir)
+
+        if not os.path.exists(os.path.dirname(self.auth_token_file)):
+            os.makedirs(os.path.dirname(self.auth_token_file))
         
        
 
