@@ -7,3 +7,5 @@ sample/MyPhotoDump_bu/
 build/
 dist/
 sample_albums/
+publish/Auto Albumizer-cache/
+publish/Auto Albumizer-SetupFiles/

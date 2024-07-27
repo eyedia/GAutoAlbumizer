@@ -31,14 +31,15 @@ a = Analysis(
         ('config.ini', '.'),
 
         ('common/__init__.py', 'common'),
-        ('common/config.py', 'common'),
+        ('common/gaa_config_parser_section.py', 'common'),
+        ('common/gaa_config_parser.py', 'common'),
         ('common/fileHandler.py', 'common'),
 
         ('exif/__init__.py', 'exif'),
-        ('exif/updateExif.py', 'exif'),
+        ('exif/ExifHandler.py', 'exif'),
 
         ('meta/__init__.py', 'meta'),
-        ('meta/metaFile.py', 'meta'),
+        ('meta/metaFileHandler.py', 'meta'),
 
         ('upload/__init__.py', 'upload'),
         ('upload/GooglePhotoUploader.py', 'upload'),
