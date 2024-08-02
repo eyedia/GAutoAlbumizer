@@ -8,6 +8,10 @@ google-auth-oauthlib = "*"
 piexif = "*"
 pandas = "*"
 numpy = "*"
+tkcalendar = "*"
+customtkinter = "*"
+pillow = "*"
+tkinterdnd2 = "*"
 
 [dev-packages]
 
