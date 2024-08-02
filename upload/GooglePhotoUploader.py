@@ -15,7 +15,7 @@ class GooglePhotoUploader:
     def __init__(self, config):
         self.name = 'self'
         self.config = config        
-        self.log_file = "{0}\{1}".format(config.log_dir, datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))          
+        self.log_file = os.path.join(config.log_dir, datetime.datetime.now().strftime('mylogfile_%H_%M_%d_%m_%Y.log'))          
 
     def auth(self, scopes):
         flow = InstalledAppFlow.from_client_secrets_file(self.config.client_secrets_file, scopes=scopes)
@@ -116,10 +116,10 @@ class GooglePhotoUploader:
         logging.debug("Server response: {}".format(resp))
 
         if "id" in resp:
-            logging.info("Uploading into NEW photo album -- \'{0}\'".format(album_title))
+            logging.info("Uploading into NEW photo album -- '{0}'".format(album_title))
             return resp['id']
         else:
-            logging.error("Could not find or create photo album '\{0}\'. Server Response: {1}".format(album_title, resp))
+            logging.error("Could not find or create photo album '{0}'. Server Response: {1}".format(album_title, resp))
             return None
 
     def upload_photos(self, session, album_name, photo_file_list):

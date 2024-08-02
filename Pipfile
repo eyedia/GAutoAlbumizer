@@ -7,6 +7,7 @@ name = "pypi"
 google-auth-oauthlib = "*"
 piexif = "*"
 pandas = "*"
+numpy = "*"
 
 [dev-packages]
 
