@@ -1,7 +1,3 @@
-Here's a refined version of your markdown page for **Google Auto Albumizer** with corrections and enhancements for clarity and readability:
-
----
-
 # Google Auto Albumizer
 
 **AutoAlbumizer** is your ultimate Google Photos management tool, offering bulk uploads and intelligent album creation to keep your memories organized effortlessly.
