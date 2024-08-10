@@ -12,6 +12,7 @@ tkcalendar = "*"
 customtkinter = "*"
 pillow = "*"
 tkinterdnd2 = "*"
+appdirs = "*"
 
 [dev-packages]
 
