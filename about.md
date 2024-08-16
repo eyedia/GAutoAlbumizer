@@ -1,7 +1,3 @@
-Here's a refined version of your markdown page for **Google Auto Albumizer** with corrections and enhancements for clarity and readability:
-
----
-
 # Google Auto Albumizer
 
 **AutoAlbumizer** is your ultimate Google Photos management tool, offering bulk uploads and intelligent album creation to keep your memories organized effortlessly.
@@ -22,11 +18,30 @@ The tool operates through the following steps or stages:
 
 The **Scan** command scans a given directory and its subdirectories to create metadata. You can see how many folders and photos you have. The tool intelligently identifies the first subdirectory as the album name.
 
+```
+Photo-dump/
+├── Folder1 (Album1)/
+│   ├── Photo1.jpg
+│   ├── Photo2.jpg
+│   └── subdir (Album1)/
+│       ├── Photo3.jpg
+│       └── Photo4.jpg
+├── Folder2 (Album2)/
+│   ├── Photo5.jpg
+│   ├── Photo6.jpg
+│   └── subdir (Album2)/
+│       ├── Photo7.jpg
+│       └── Photo8.jpg
+└── Folder3 (Album3)/
+    ├── Photo9.jpg
+    ├── Photo10.jpg
+    ├── Photo11.jpg
+    └── Photo12.jpg
+```
+You should provide the root folder to the Auto Albumizer
+
 **Usage**:
-1. Run the following command:
-   ```bash
-   python main.py --job scan --input-dir D:\GD\temp\01Old
-   ```
+Just drag and drop a directory
 
 ### 2. Update EXIF Creation Date (Optional)
 
@@ -37,11 +52,8 @@ Have you noticed the timeline-scroll on the right? Almost all photo management t
 If you have digitized your old photos or somehow your original photo creation dates are incorrect, this step will help you update the photo creation date.
 
 **Usage**:
-1. Update creation dates for the required photos in the metadata.
-2. Run the following command to update the EXIF creation date:
-   ```bash
-   python main.py --job exif
-   ```
+1. Update creation dates of the album to update all photos under it.
+2. Update creation date of individul photos
 
 > **Note:** This step is optional.
 
@@ -50,40 +62,4 @@ If you have digitized your old photos or somehow your original photo creation da
 In this final step, review the metadata one more time and let AutoAlbumizer upload the photos for you, either by creating new albums or uploading them to existing ones.
 
 **Usage**:
-1. Review the metadata files.
-2. Run the following command to upload photos:
-   ```bash
-   python main.py --job upload
-   ```
-
-## TODO
-
-### Basic Functionalities
-
-- Ensure that the basic workflow functions smoothly.
-
-### Cross-Platform GUI
-
-- We are working on a simple cross-platform GUI. If you have any suggestions, please feel free to reach out.
-
----
-
-### Developers Guide:
-
-#### Obtaining a Google Photos API key
-
-- Obtain a Google Photos API key (Client ID and Client Secret) by following the instructions on [Getting started with Google Photos REST APIs](https://developers.google.com/photos/library/guides/get-started)
-- Ensure Google Photo API is enabled for your google project.
-- Download the 'client_secrets.json' file and keep it on the root folder.
-
-#### Set up your environment
-
-- Make sure you have [Python 3.7](https://www.python.org/downloads/) => installed on your system
-- If needed, install pipenv via pip install pipenv
-- After cloning the code run following commands to create the virtual environment and install dependencies
-
-```bash
-   pipenv install
-   pipenv shell
-   setup.bat
-```
+Click upload button
